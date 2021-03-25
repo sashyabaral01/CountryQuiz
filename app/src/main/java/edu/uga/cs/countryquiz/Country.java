@@ -28,9 +28,6 @@ public class Country {
     public void setCountryContinent(String countryContinent) {
         this.countryContinent = countryContinent;
     }
-
-
-
     public Country(){};
 
     public Country(String countryName, String countryContinent){
@@ -38,14 +35,15 @@ public class Country {
         this.countryName=countryName;
 
     }
-
-
     public Country(int id, String countryName, String countryContinent){
         this.countryContinent = countryContinent;
         this.countryName=countryName;
         this.id=id;
 
     }
+
+
+
 
 
 }
