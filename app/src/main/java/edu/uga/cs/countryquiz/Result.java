@@ -2,7 +2,7 @@ package edu.uga.cs.countryquiz;
 
 public class Result {
 
-    int id;
+    int identifer;
     String question1;
     String question2;
     String question3;
@@ -12,7 +12,7 @@ public class Result {
 
     public Result()
     {
-        this.id = -1;
+        this.identifer = -1;
         this.question1 = null;
         this.question2 = null;
         this.question3 = null;
@@ -23,7 +23,7 @@ public class Result {
 
 
     public Result(int id, String question1, String question2, String question3, String question4, String question5, String question6) {
-        this.id = id;
+        this.identifer = id;
         this.question1 = question1;
         this.question2 = question2;
         this.question3 = question3;
@@ -36,11 +36,11 @@ public class Result {
 
 
     public int getId() {
-        return id;
+        return identifer;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.identifer = id;
     }
 
     public String getQuestion1() {
