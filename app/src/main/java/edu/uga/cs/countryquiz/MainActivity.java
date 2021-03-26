@@ -1,6 +1,9 @@
 package edu.uga.cs.countryquiz;
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +17,7 @@ import com.opencsv.CSVReader;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,56 +29,50 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         countryData = new CountryData(this);
-
-        countryData.open(); //testing purposes
-
-
         readFromCSV();
-
+        System.out.println("TEST");
     }
 
 
-
     private void readFromCSV() {
-        try {
-            Resources res = getResources();
-            InputStream in_s = res.openRawResource(R.raw.country_continent);
-            CSVReader reader = new CSVReader(new InputStreamReader(in_s));
+        countryData.open();
+        List<Country> questionList = countryData.retrieveGeographyQuestions();
+        if (questionList.size() == 0) {
+            try {
+                Resources res = getResources();
+                InputStream in_s = res.openRawResource(R.raw.country_continent);
+                CSVReader reader = new CSVReader(new InputStreamReader(in_s));
 
-            String[] nextLine;
-            while ((nextLine = reader.readNext()) != null) {
-                Country country1 = new Country(nextLine[0],nextLine[1]);
-                countryData.storeGeographyQuestion(country1);
+                String[] nextLine;
+                while ((nextLine = reader.readNext()) != null) {
+                    Country country1 = new Country(nextLine[0], nextLine[1]);
+                    new CountryDBWriterTask().execute(country1);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        }
+        else{
+            System.out.println("Data is filled. ");
         }
     }
     private class CountryDBWriterTask extends AsyncTask<Country, Void, Country> {
         @Override
         protected Country doInBackground(Country... country) {
             countryData.storeGeographyQuestion(country[0]);
+            System.out.println("Was this printed");
             return country[0];
         }
         @Override
         protected void onPostExecute( Country country ) {
             super.onPostExecute( country );
-            // Show a quick confirmation message
-            Toast.makeText(context,"Stored in db",Toast.LENGTH_LONG);
         }
     }
-
-
-
-
-
-
-
     @Override
     public void onResume() {
         // open the database in onResume
-      //  if( countryData != null )
-        //    countryData.open();
+       if( countryData != null )
+            countryData.open();
         super.onResume();
     }
 
@@ -85,12 +83,6 @@ public class MainActivity extends AppCompatActivity {
             countryData.close();
         super.onPause();
     }
-
-
-
-
-
-
     }
 
 

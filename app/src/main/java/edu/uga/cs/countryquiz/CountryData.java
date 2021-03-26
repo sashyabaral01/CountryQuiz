@@ -12,9 +12,19 @@ import java.util.List;
 
 public class CountryData {
 
+    private static final String DEBUG_TAG = "Test: ";
     //Private members
     private SQLiteDatabase db;
     private SQLiteOpenHelper geographyQuestionsDbHelper;
+
+    private static final String[] allColumns = {
+            QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_ID,
+            QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_COUNTRY,
+            QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_CONTINENT
+    };
+
+
+
 
     public CountryData(Context context){
         this.geographyQuestionsDbHelper = QuizDBHelper.getInstance(context);
@@ -33,6 +43,54 @@ public class CountryData {
     }
 
 
+    public List<Country> retrieveGeographyQuestions() {
+
+        //Start reading from database
+        db = geographyQuestionsDbHelper.getReadableDatabase();
+
+        //ArrayList of geography questions
+        ArrayList<Country> geographyQuestions = new ArrayList<>();
+        Cursor cursor = null;
+
+        cursor = db.query(QuizDBHelper.TABLE_GEOGRAPHYQUESTIONS, allColumns, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            //Query the values from one row, iterating over each row
+            long id = cursor.getLong(cursor.getColumnIndex(QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_ID));
+            String continent = cursor.getString(cursor.getColumnIndex(QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_CONTINENT));
+            String country = cursor.getString(cursor.getColumnIndex(QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_COUNTRY));
+
+            //Create Geography Question object with current values
+            Country geographyQuestion = new Country(continent, country);
+            geographyQuestion.setId(id);
+
+            //Append current row's data to the ArrayList
+            geographyQuestions.add(geographyQuestion);
+        }
+
+        //Close cursor and return List of geography questions
+        cursor.close();
+        return geographyQuestions;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public Country storeGeographyQuestion(Country geographyQuestion){
 
 
@@ -48,6 +106,10 @@ public class CountryData {
 
         return geographyQuestion;
     }
+
+
+
+
 
 
 
