@@ -12,7 +12,7 @@ import android.widget.RadioGroup;
  * */
 public class QuizDBHelper extends SQLiteOpenHelper {
     //Constant values for easier code reading
-    private static final String DB_NAME = "test3.db";
+    private static final String DB_NAME = "test4.db";
     //Current version of the DB (Increment to rebuild database)
     // -- DO NOT DECREMENT --
     private static final int DB_VERSION = 1;
@@ -37,9 +37,9 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     //Name of the columns for the Geography Quizzes table
     public static final String GEOGRAPHYQUIZZES_COLUMN_ID="id";
     public static final String GEOGRAPHYQUIZZES_COLUMN_Q1="Q1";
-    public static final String GEOGRAPHYQUIZZES_COLUMN_Q2="Q1";
-    public static final String GEOGRAPHYQUIZZES_COLUMN_Q3="Q1";
-    public static final String GEOGRAPHYQUIZZES_COLUMN_Q4="Q1";
+    public static final String GEOGRAPHYQUIZZES_COLUMN_Q2="Q2";
+    public static final String GEOGRAPHYQUIZZES_COLUMN_Q3="Q3";
+    public static final String GEOGRAPHYQUIZZES_COLUMN_Q4="Q4";
     public static final String GEOGRAPHYQUIZZES_COLUMN_Q5="Q5";
     public static final String GEOGRAPHYQUIZZES_COLUMN_Q6="Q6";
     public static final String GEOGRAPHYQUIZZES_COLUMN_RESULTS="Results";

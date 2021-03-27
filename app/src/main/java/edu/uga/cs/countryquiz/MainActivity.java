@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         countryData = new CountryData(this);
         readFromCSV();
-        List<Country> questionList = countryData.retrieveGeographyQuestions();
-        System.out.println("THis is the question list: " + questionList);
-        System.out.println("TEST");
+       List<Country> questionList = countryData.retrieveGeographyQuestions();
+       // System.out.println("THis is the question list: " + questionList);
+      //  System.out.println("TEST");
     }
     private void readFromCSV() {
         countryData.open();

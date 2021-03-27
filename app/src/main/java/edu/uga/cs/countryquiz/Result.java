@@ -1,5 +1,7 @@
 package edu.uga.cs.countryquiz;
 
+import java.time.LocalDate;
+
 public class Result {
 
     int identifer;
@@ -9,6 +11,7 @@ public class Result {
     String question4;
     String question5;
     String question6;
+    String date;
 
     public Result()
     {
@@ -19,6 +22,7 @@ public class Result {
         this.question4 = null;
         this.question5 = null;
         this.question6=null;
+        this.date = null;
     }
 
 
@@ -30,6 +34,7 @@ public class Result {
         this.question4 = question4;
         this.question5 = question5;
         this.question6 = question6;
+        this.date = LocalDate.now().toString();
     }
 
 
