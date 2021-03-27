@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Country doInBackground(Country... country) {
             countryData.storeGeographyQuestion(country[0]);
-            System.out.println("Was this printed");
             return country[0];
         }
         @Override
