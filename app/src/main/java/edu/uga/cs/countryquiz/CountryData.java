@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CountryData {
-
     private static final String DEBUG_TAG = "Test: ";
     //Private members
     private SQLiteDatabase db;
@@ -22,98 +21,57 @@ public class CountryData {
             QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_COUNTRY,
             QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_CONTINENT
     };
-
-
-
-
     public CountryData(Context context){
         this.geographyQuestionsDbHelper = QuizDBHelper.getInstance(context);
     }
 
-
     public void open(){
         db = geographyQuestionsDbHelper.getWritableDatabase();
     }
-
-
     public void close(){
         if (geographyQuestionsDbHelper != null){
             geographyQuestionsDbHelper.close();
         }
     }
-
-
     public List<Country> retrieveGeographyQuestions() {
-
-        //Start reading from database
-        db = geographyQuestionsDbHelper.getReadableDatabase();
-
-        //ArrayList of geography questions
-        ArrayList<Country> geographyQuestions = new ArrayList<>();
+        ArrayList<Country> questions = new ArrayList<>();
         Cursor cursor = null;
 
-        cursor = db.query(QuizDBHelper.TABLE_GEOGRAPHYQUESTIONS, allColumns, null, null, null, null, null);
-        while (cursor.moveToNext()) {
-            //Query the values from one row, iterating over each row
-            long id = cursor.getLong(cursor.getColumnIndex(QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_ID));
-            String continent = cursor.getString(cursor.getColumnIndex(QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_CONTINENT));
-            String country = cursor.getString(cursor.getColumnIndex(QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_COUNTRY));
-
-            //Create Geography Question object with current values
-            Country geographyQuestion = new Country(continent, country);
-            geographyQuestion.setId(id);
-
-            //Append current row's data to the ArrayList
-            geographyQuestions.add(geographyQuestion);
+        try {
+            // Execute the select query and get the Cursor to iterate over the retrieved rows
+            cursor = db.query( QuizDBHelper.TABLE_GEOGRAPHYQUESTIONS, allColumns,
+                    null, null, null, null, null );
+            // collect all questions into a List
+            if( cursor.getCount() > 0 ) {
+                while( cursor.moveToNext() ) {
+                    // get all attribute values of this question
+                    long id = cursor.getInt( cursor.getColumnIndex( QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_ID ) );
+                    String country = cursor.getString( cursor.getColumnIndex( QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_COUNTRY ) );
+                    String continent = cursor.getString( cursor.getColumnIndex( QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_CONTINENT ));
+                    Country country1 = new Country(country,continent);
+                    country1.setId(id);
+                    questions.add(country1);
+                }
+            }
+            Log.d( DEBUG_TAG, "retrieveAllQuestions - Number of records from DB: " + cursor.getCount() );
         }
-
-        //Close cursor and return List of geography questions
-        cursor.close();
-        return geographyQuestions;
-
+        catch( Exception e ){
+            Log.d( DEBUG_TAG, "Exception caught: " + e );
+        }
+        finally{
+            // we should close the cursor
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return questions;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public Country storeGeographyQuestion(Country geographyQuestion){
-
-
         ContentValues values = new ContentValues();
-
         values.put(QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_COUNTRY, geographyQuestion.getCountry());
         values.put(QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_CONTINENT, geographyQuestion.getContinent());
-
-
         long id = db.insert(QuizDBHelper.TABLE_GEOGRAPHYQUESTIONS,null, values);
-
         geographyQuestion.setId(id);
-
         return geographyQuestion;
     }
-
-
-
-
-
-
-
-
-
-
 }

@@ -13,7 +13,7 @@ import android.widget.RadioGroup;
 public class QuizDBHelper extends SQLiteOpenHelper {
 
     //Constant values for easier code reading
-    private static final String DB_NAME = "test2.db";
+    private static final String DB_NAME = "test3.db";
     //Current version of the DB (Increment to rebuild database)
     // -- DO NOT DECREMENT --
     private static final int DB_VERSION = 1;

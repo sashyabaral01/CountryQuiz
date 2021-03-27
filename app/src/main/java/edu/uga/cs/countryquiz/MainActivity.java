@@ -20,24 +20,23 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
     private CountryData countryData = null;
     private Context context;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         countryData = new CountryData(this);
         readFromCSV();
+        List<Country> questionList = countryData.retrieveGeographyQuestions();
+        System.out.println("THis is the question list: " + questionList);
         System.out.println("TEST");
     }
-
-
     private void readFromCSV() {
         countryData.open();
         List<Country> questionList = countryData.retrieveGeographyQuestions();
         if (questionList.size() == 0) {
+            System.out.println("There is no data currently");
             try {
                 Resources res = getResources();
                 InputStream in_s = res.openRawResource(R.raw.country_continent);
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             countryData.open();
         super.onResume();
     }
-
     @Override
     public void onPause() {
         // close the database in onPause
@@ -84,7 +82,3 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
     }
-
-
-
-
