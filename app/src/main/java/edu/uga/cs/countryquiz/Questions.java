@@ -17,16 +17,35 @@ import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.List;
+
 public class Questions extends AppCompatActivity {
+    QuizData quizData;
+    CountryData countryData;
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     TabLayout tabLayout;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        countryData = new CountryData(this);
+        quizData = new QuizData(this);
+        quizData.open();
+        countryData.open();
+
+
+        List<Country> retrievedrandomCountries =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
+
+
+        System.out.println(retrievedrandomCountries);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
+
+
+
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -124,6 +143,7 @@ public class Questions extends AppCompatActivity {
             //    ((SimpleTabsActivity) getActivity()).loadView(mImageView, resId, mTextView, description);
             //}
         }
+
     }
 
     /*

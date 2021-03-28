@@ -78,6 +78,6 @@ public class Country {
 
     public String toString()
     {
-        return id + ": "  + " " + country + " " + continent;
+        return  country + " " + continent;
     }
 }
