@@ -36,18 +36,20 @@ public class Questions extends AppCompatActivity {
         quizData.open();
         countryData.open();
 
+       
 
         List<Country> retrievedrandomCountries =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
         System.out.println(retrievedrandomCountries);
         //this has the random questions in an arraylist.
+        // For example [Azerbaijan Europe, Singapore Asia, Djibouti Africa, Yemen Asia, Uzbekistan Asia, Switzerland Europe] 6 entries
+        //this is sample output
 
         /*
-        This is to test the retrieved countries. Trying to retrieve. 
+        This is to test the retrieved countries. Trying to retrieve. Just a random index chosen
          */
-        Country country= retrievedrandomCountries.get(2);
-        System.out.println("Get country: " +country.getCountry());
-        System.out.println("Get continent: " + country.getContinent());
-        System.out.println("Get country id: " + country.getId());
+        Country country= retrievedrandomCountries.get(2); //gets Djibouti Africa from above on line 40
+        System.out.println("Get country: " +country.getCountry()); //prints Djibouti
+        System.out.println("Get continent: " + country.getContinent()); //prints Africa
 
 
         super.onCreate(savedInstanceState);
