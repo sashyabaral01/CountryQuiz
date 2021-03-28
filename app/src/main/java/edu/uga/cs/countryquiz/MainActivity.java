@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String DEBUG = "Testing";
     private CountryData countryData = null;
     private QuizData quizData = null;
-    private Context context;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         countryData.open();
         List<Country> questionList = countryData.retrieveGeographyQuestions();
         if (questionList.size() == 0) {
-            System.out.println("There is no data currently");
             try {
                 Resources res = getResources();
                 InputStream in_s = res.openRawResource(R.raw.country_continent);
@@ -72,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else{
-            System.out.println("Data is filled. ");
         }
     }
     private class CountryDBWriterTask extends AsyncTask<Country, Void, Country> {

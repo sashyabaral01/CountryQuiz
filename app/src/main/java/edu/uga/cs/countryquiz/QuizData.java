@@ -90,30 +90,15 @@ public class QuizData {
         Country c1;
 
         for(int i = 0; i<6; i++){
-            System.out.println("Am i Inside of this?");
-
-            System.out.println("Before query: " +ids);
-            System.out.println("Query at One: " + ids.get(0));
 
             String query = "SELECT country,continent  FROM GEOGRAPHYQUESTIONS where id = " + ids.get(i);
-
             System.out.println(query);
             Cursor c = db.rawQuery(query,null);
-
             c.moveToFirst();
-
             String continent =  c.getString( c.getColumnIndex( QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_CONTINENT ) );
-
-            System.out.println(continent);
-
             String country =  c.getString( c.getColumnIndex( QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_COUNTRY ) );
-
             c1 = new Country(country,continent);
-
             convertedQuestions.add(c1);
-
-            System.out.println("From method : " +c1);
-
         }
 
         return convertedQuestions;
