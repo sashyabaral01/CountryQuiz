@@ -38,10 +38,18 @@ public class Questions extends AppCompatActivity {
 
 
         List<Country> retrievedrandomCountries =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
+        System.out.println(retrievedrandomCountries);
         //this has the random questions in an arraylist.
 
+        /*
+        This is to test the retrieved countries. Trying to retrieve. 
+         */
+        Country country= retrievedrandomCountries.get(2);
+        System.out.println("Get country: " +country.getCountry());
+        System.out.println("Get continent: " + country.getContinent());
+        System.out.println("Get country id: " + country.getId());
 
-        System.out.println(retrievedrandomCountries.get(4));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
 
