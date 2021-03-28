@@ -38,7 +38,7 @@ public class Questions extends AppCompatActivity {
 
 
         List<Country> retrievedrandomCountries =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
-        //this has the random questions in an arraylist. 
+        //this has the random questions in an arraylist.
 
 
         System.out.println(retrievedrandomCountries.get(4));
