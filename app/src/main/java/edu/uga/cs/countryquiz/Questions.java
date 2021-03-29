@@ -27,14 +27,10 @@ import java.util.Random;
 public class Questions extends AppCompatActivity {
     QuizData quizData;
     CountryData countryData;
-
-
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     TabLayout tabLayout;
-
     List<Country> questionsData;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         countryData = new CountryData(this);
@@ -65,7 +61,7 @@ public class Questions extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        mViewPager.setOffscreenPageLimit(6);
+        mViewPager.setOffscreenPageLimit(10);
 
         ArrayList<String> continents = new ArrayList<>();
 
@@ -105,18 +101,15 @@ public class Questions extends AppCompatActivity {
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1);
         }
-
         @Override
         public int getCount() {
             // Show 6 total pages.
@@ -178,53 +171,5 @@ public class Questions extends AppCompatActivity {
                 ((Questions) getActivity()).loadView(countryText, radioBtn1, radioBtn2, radioBtn3, questionNum);
             }
         }
-
-
-
-
-
-
     }
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_simple_tabs, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
