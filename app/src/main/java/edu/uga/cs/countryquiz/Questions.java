@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -27,7 +28,7 @@ public class Questions extends AppCompatActivity {
     ViewPager mViewPager;
     TabLayout tabLayout;
 
-
+    List<Country> questionsData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +37,10 @@ public class Questions extends AppCompatActivity {
         quizData.open();
         countryData.open();
 
-       
 
-        List<Country> retrievedrandomCountries =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
-        System.out.println(retrievedrandomCountries);
+
+        questionsData =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
+        System.out.println(questionsData);
         //this has the random questions in an arraylist.
         // For example [Azerbaijan Europe, Singapore Asia, Djibouti Africa, Yemen Asia, Uzbekistan Asia, Switzerland Europe] 6 entries
         //this is sample output
@@ -47,7 +48,7 @@ public class Questions extends AppCompatActivity {
         /*
         This is to test the retrieved countries. Trying to retrieve. Just a random index chosen
          */
-        Country country= retrievedrandomCountries.get(2); //gets Djibouti Africa from above on line 40
+        Country country= questionsData.get(2); //gets Djibouti Africa from above on line 40
         System.out.println("Get country: " +country.getCountry()); //prints Djibouti
         System.out.println("Get continent: " + country.getContinent()); //prints Africa
 
@@ -77,9 +78,12 @@ public class Questions extends AppCompatActivity {
 
     }
 
-    public void loadView(ImageView imageView, int resId, TextView textView, String description) {
-        imageView.setImageResource(resId);
-        textView.setText(description);
+    public void loadView(TextView countryText, RadioButton radio1, RadioButton radio2, RadioButton radio3, int questionNumber) {
+        Country currentCountry = questionsData.get(questionNumber - 1);
+        countryText.setText(currentCountry.getCountry());
+        radio1.setText(currentCountry.getContinent());
+        radio2.setText("continent2");
+        radio3.setText("continent3");
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -97,7 +101,7 @@ public class Questions extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 6 total pages.
             return 6;
         }
 
@@ -111,9 +115,11 @@ public class Questions extends AppCompatActivity {
     public static class PlaceholderFragment extends Fragment {
 
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private int mImageNum;
-        private TextView mTextView;
-        private ImageView mImageView;
+        private int questionNum;
+        private TextView countryText;
+        private RadioButton radioBtn1;
+        private RadioButton radioBtn2;
+        private RadioButton radioBtn3;
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
@@ -130,9 +136,9 @@ public class Questions extends AppCompatActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             if (getArguments() != null) {
-                mImageNum = getArguments().getInt(ARG_SECTION_NUMBER);
+                questionNum = getArguments().getInt(ARG_SECTION_NUMBER);
             } else {
-                mImageNum = -1;
+                questionNum = -1;
             }
         }
 
@@ -140,19 +146,19 @@ public class Questions extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_question, container, false);
-            //mTextView = (TextView) rootView.findViewById(R.id.section_label);
-            //mImageView = (ImageView) rootView.findViewById(R.id.image_view);
+            countryText = (TextView) rootView.findViewById(R.id.question_country);
+            radioBtn1 = (RadioButton) rootView.findViewById(R.id.question_answer_1);
+            radioBtn2 = (RadioButton) rootView.findViewById(R.id.question_answer_2);
+            radioBtn3 = (RadioButton) rootView.findViewById(R.id.question_answer_3);
             return rootView;
         }
 
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
-            //if (Questions.class.isInstance(getActivity())) {
-            //    final int resId = Questions.imageIds[mImageNum - 1];
-            //    final String description = imageDescriptions[mImageNum - 1];
-            //    ((SimpleTabsActivity) getActivity()).loadView(mImageView, resId, mTextView, description);
-            //}
+            if (Questions.class.isInstance(getActivity())) {
+                ((Questions) getActivity()).loadView(countryText, radioBtn1, radioBtn2, radioBtn3, questionNum);
+            }
         }
 
     }
