@@ -15,7 +15,6 @@ public class CountryData {
     //Private members
     private SQLiteDatabase db;
     private SQLiteOpenHelper geographyQuestionsDbHelper;
-
     private static final String[] allColumns = {
             QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_ID,
             QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_COUNTRY,
@@ -75,16 +74,9 @@ public class CountryData {
         geographyQuestion.setId(id);
         return geographyQuestion;
     }
-
-
-
-
     public List<Long> retrieveAllQuestionsById() {
-
-
         ArrayList<Long> questionsById = new ArrayList<>();
         Cursor cursor = null;
-
         try {
             // Execute the select query and get the Cursor to iterate over the retrieved rows
             cursor = db.query( QuizDBHelper.TABLE_GEOGRAPHYQUESTIONS, allColumns,
@@ -98,7 +90,6 @@ public class CountryData {
                     String continent = cursor.getString( cursor.getColumnIndex( QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_CONTINENT ));
                     Country country1 = new Country(country,continent);
                     country1.setId(id);
-
                     questionsById.add(country1.getId());
                 }
             }
@@ -113,12 +104,6 @@ public class CountryData {
                 cursor.close();
             }
         }
-
-
         return questionsById;
     }
-
-
-
-
 }
