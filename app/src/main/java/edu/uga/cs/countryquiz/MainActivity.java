@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
            }
        });
     }
+    /*
+    Storing the data asynchronously from the CSV to the SQLiteDB
+     */
     private void readFromCSV() {
         countryData.open();
         List<Country> questionList = countryData.retrieveGeographyQuestions();
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else{
+            System.out.println("Data is already filled");
         }
     }
     private class CountryDBWriterTask extends AsyncTask<Country, Void, Country> {
@@ -81,6 +85,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute( Country country ) {
             super.onPostExecute( country );
+        }
+    }
+
+    private class RetrieveRandomDBWriterTask extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+
+
+
+            return null;
         }
     }
     @Override

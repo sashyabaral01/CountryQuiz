@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +32,8 @@ public class Questions extends AppCompatActivity {
     ViewPager mViewPager;
     TabLayout tabLayout;
     List<Country> questionsData;
+    private static final String DEBUG_TAG = "Radio Button: ";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         countryData = new CountryData(this);
@@ -39,36 +42,27 @@ public class Questions extends AppCompatActivity {
         countryData.open();
         questionsData =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
         System.out.println(questionsData);
-        //this has the random questions in an arraylist.
-        // For example [Azerbaijan Europe, Singapore Asia, Djibouti Africa, Yemen Asia, Uzbekistan Asia, Switzerland Europe] 6 entries
-        //this is sample output
-        /*
-        This is to test the retrieved countries. Trying to retrieve. Just a random index chosen
-         */
         Country country= questionsData.get(2); //gets Djibouti Africa from above on line 40
         System.out.println("Get country: " +country.getCountry()); //prints Djibouti
         System.out.println("Get continent: " + country.getContinent()); //prints Africa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        //toolbar.setTitle(mSectionsPagerAdapter.getPageTitle(0));
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         tabLayout.setTabsFromPagerAdapter(mSectionsPagerAdapter);
         tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
         mViewPager.setOffscreenPageLimit(10);
 
         ArrayList<String> continents = new ArrayList<>();
 
+
+
     }
 
     public void loadView(TextView countryText, RadioButton radio1, RadioButton radio2, RadioButton radio3, int questionNumber) {
-
         List<String> continents = new ArrayList<String>();
         List<String> radioTextArray = new ArrayList<String>();
         Country currentCountry = questionsData.get(questionNumber - 1);
@@ -79,12 +73,9 @@ public class Questions extends AppCompatActivity {
         continents.add("North America");
         continents.add("Europe");
         continents.add("Oceania");
-        continents.add("Antarctica");
         radioTextArray.add(currentCountry.getContinent());
         continents.remove(currentCountry.getContinent());
-        System.out.println("This is the size: " + continents.size());
         int size = continents.size();
-        System.out.println("This is the size in the variable: " + size);
         Random random = new Random();
         int randomIndexOne = random.nextInt(continents.size());
         radioTextArray.add(continents.get(randomIndexOne));
@@ -96,8 +87,6 @@ public class Questions extends AppCompatActivity {
         radio1.setText(radioTextArray.get(0));
         radio2.setText(radioTextArray.get(1));
         radio3.setText(radioTextArray.get(2));
-        System.out.println("This is the radio text array: " + radioTextArray);
-
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -122,7 +111,6 @@ public class Questions extends AppCompatActivity {
             return String.valueOf("Q" + imageNum);
         }
     }
-
     public static class PlaceholderFragment extends Fragment {
 
         private static final String ARG_SECTION_NUMBER = "section_number";
@@ -140,8 +128,17 @@ public class Questions extends AppCompatActivity {
             return fragment;
         }
 
+
+
+
+
+
         public PlaceholderFragment() {
         }
+
+
+
+
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -153,6 +150,10 @@ public class Questions extends AppCompatActivity {
             }
         }
 
+
+
+
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -161,6 +162,8 @@ public class Questions extends AppCompatActivity {
             radioBtn1 = (RadioButton) rootView.findViewById(R.id.question_answer_1);
             radioBtn2 = (RadioButton) rootView.findViewById(R.id.question_answer_2);
             radioBtn3 = (RadioButton) rootView.findViewById(R.id.question_answer_3);
+
+
             return rootView;
         }
 
@@ -169,6 +172,8 @@ public class Questions extends AppCompatActivity {
             super.onActivityCreated(savedInstanceState);
             if (Questions.class.isInstance(getActivity())) {
                 ((Questions) getActivity()).loadView(countryText, radioBtn1, radioBtn2, radioBtn3, questionNum);
+                Log.i(DEBUG_TAG,radioBtn3.getText().toString());
+
             }
         }
     }

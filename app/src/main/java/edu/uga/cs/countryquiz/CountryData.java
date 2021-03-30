@@ -93,6 +93,7 @@ public class CountryData {
                     questionsById.add(country1.getId());
                 }
             }
+
             Log.d( DEBUG_TAG, "retrieveAllQuestions - Number of records from DB: " + cursor.getCount() );
         }
         catch( Exception e ){
