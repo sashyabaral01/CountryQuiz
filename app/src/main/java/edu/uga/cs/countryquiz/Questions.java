@@ -42,6 +42,11 @@ public class Questions extends AppCompatActivity {
         countryData.open();
         questionsData =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
         System.out.println(questionsData);
+
+
+       Country country = questionsData.get(2);//gets the 3rd country in the list
+       System.out.println(country.getCountry() + " " + country.getContinent()); //prints that countries name and continent. 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
