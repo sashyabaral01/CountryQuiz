@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class QuizData {
     private static final String DEBUG_TAG = "Test: ";
@@ -27,7 +28,7 @@ public class QuizData {
             QuizDBHelper.GEOGRAPHYQUIZZES_COLUMN_Q6,
             QuizDBHelper.GEOGRAPHYQUIZZES_COLUMN_RESULTS
     };
-    public QuizData(Context context){
+    public QuizData(Context context) {
         this.geographyQuizDbHelper = QuizDBHelper.getInstance(context);
     }
     public void storeGeographyQuiz(Quiz quiz){
@@ -42,10 +43,16 @@ public class QuizData {
         long id = db.insert(QuizDBHelper.TABLE_GEOGRAPHYQUIZZES,null, values);
         quiz.setId(id);
     }
+
+
+    public void storeResultsandDate(Quiz quiz){
+
+    }
+
     public List<Long> retrieveRandomQuestionsById(List<Long> countryListId){
         List<Long> randomQuestionsId = new ArrayList<>();
         List<Long> shuffledListQuestions = new ArrayList<>();
-        for(int i =0; i<193; i++) {
+        for(int i =0; i<195; i++) {
             randomQuestionsId.add(countryListId.get(i));
         }
         Collections.shuffle(randomQuestionsId);
@@ -78,19 +85,16 @@ public class QuizData {
         recentRow.add(qu4);
         recentRow.add(qu5);
         recentRow.add(qu6);
+
         System.out.println("From inside the method: " +recentRow);
         return recentRow;
     }
 
     public List<Country> convertQuizIdToQuestions(List<Long> ids){
         System.out.println("Entered function");
-
-
         List<Country> convertedQuestions = new ArrayList<>();
         Country c1;
-
         for(int i = 0; i<6; i++){
-
             String query = "SELECT country,continent  FROM GEOGRAPHYQUESTIONS where id = " + ids.get(i);
             System.out.println(query);
             Cursor c = db.rawQuery(query,null);
@@ -100,18 +104,43 @@ public class QuizData {
             c1 = new Country(country,continent);
             convertedQuestions.add(c1);
         }
-
         return convertedQuestions;
-
     }
     public void open(){
         db = geographyQuizDbHelper.getWritableDatabase();
     }
-
     //Close the database connection
     public void close(){
         if (geographyQuizDbHelper != null){
             geographyQuizDbHelper.close();
         }
+    }
+
+
+
+    public ArrayList<String> getChoices(String correctContinent){
+
+
+        ArrayList<String> choices = new ArrayList<>();
+
+        ArrayList<String> radioTextArray = new ArrayList<>();
+        choices.add("Africa");
+        choices.add("Asia");
+        choices.add("Europe");
+        choices.add("North America");
+        choices.add("South America");
+        choices.add("Oceania");
+        radioTextArray.add(correctContinent);
+        choices.remove(correctContinent);
+        int size = choices.size();
+        Random random = new Random();
+        int randomIndexOne = random.nextInt(choices.size());
+        radioTextArray.add(choices.get(randomIndexOne));
+        choices.remove(randomIndexOne);
+        int randomIndexTwo = random.nextInt(choices.size());
+        radioTextArray.add(choices.get(randomIndexTwo));
+        choices.remove(randomIndexTwo);
+        Collections.shuffle(radioTextArray);
+        return radioTextArray;
     }
 }

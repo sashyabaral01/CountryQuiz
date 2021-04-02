@@ -42,9 +42,6 @@ public class Questions extends AppCompatActivity {
         countryData.open();
         questionsData =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
         System.out.println(questionsData);
-        Country country= questionsData.get(2); //gets Djibouti Africa from above on line 40
-        System.out.println("Get country: " +country.getCountry()); //prints Djibouti
-        System.out.println("Get continent: " + country.getContinent()); //prints Africa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -56,37 +53,16 @@ public class Questions extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         mViewPager.setOffscreenPageLimit(10);
 
-        ArrayList<String> continents = new ArrayList<>();
-
 
 
     }
-
     public void loadView(TextView countryText, RadioButton radio1, RadioButton radio2, RadioButton radio3, int questionNumber) {
-        List<String> continents = new ArrayList<String>();
-        List<String> radioTextArray = new ArrayList<String>();
         Country currentCountry = questionsData.get(questionNumber - 1);
         countryText.setText(currentCountry.getCountry());
-        continents.add("Africa");
-        continents.add("Asia");
-        continents.add("South America");
-        continents.add("North America");
-        continents.add("Europe");
-        continents.add("Oceania");
-        radioTextArray.add(currentCountry.getContinent());
-        continents.remove(currentCountry.getContinent());
-        int size = continents.size();
-        Random random = new Random();
-        int randomIndexOne = random.nextInt(continents.size());
-        radioTextArray.add(continents.get(randomIndexOne));
-        continents.remove(randomIndexOne);
-        int randomIndexTwo = random.nextInt(continents.size());
-        radioTextArray.add(continents.get(randomIndexTwo));
-        continents.remove(randomIndexTwo);
-        Collections.shuffle(radioTextArray);
-        radio1.setText(radioTextArray.get(0));
-        radio2.setText(radioTextArray.get(1));
-        radio3.setText(radioTextArray.get(2));
+       ArrayList<String> options = quizData.getChoices(currentCountry.getContinent());
+        radio1.setText(options.get(0));
+        radio2.setText(options.get(1));
+        radio3.setText(options.get(2));
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -125,6 +101,7 @@ public class Questions extends AppCompatActivity {
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
+
             return fragment;
         }
 
@@ -134,12 +111,10 @@ public class Questions extends AppCompatActivity {
 
 
         public PlaceholderFragment() {
+
+
+
         }
-
-
-
-
-
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -152,8 +127,6 @@ public class Questions extends AppCompatActivity {
 
 
 
-
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -162,8 +135,6 @@ public class Questions extends AppCompatActivity {
             radioBtn1 = (RadioButton) rootView.findViewById(R.id.question_answer_1);
             radioBtn2 = (RadioButton) rootView.findViewById(R.id.question_answer_2);
             radioBtn3 = (RadioButton) rootView.findViewById(R.id.question_answer_3);
-
-
             return rootView;
         }
 
@@ -172,7 +143,7 @@ public class Questions extends AppCompatActivity {
             super.onActivityCreated(savedInstanceState);
             if (Questions.class.isInstance(getActivity())) {
                 ((Questions) getActivity()).loadView(countryText, radioBtn1, radioBtn2, radioBtn3, questionNum);
-                Log.i(DEBUG_TAG,radioBtn3.getText().toString());
+
 
             }
         }

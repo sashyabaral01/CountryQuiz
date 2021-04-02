@@ -19,6 +19,7 @@ import com.opencsv.CSVReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final String DEBUG = "Testing";
@@ -37,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                quizData.open();
+               int results = 6;
+               String date = "Monday";
+               Quiz quiz1 = new Quiz(results,date);
+               quizData.storeResultsandDate(quiz1);
+               System.out.println("Saved date");
                List<Long> questionById = countryData.retrieveAllQuestionsById();
                List<Long> quizDataList = quizData.retrieveRandomQuestionsById(questionById);
                Long q1 = quizDataList.get(0);
@@ -45,8 +51,12 @@ public class MainActivity extends AppCompatActivity {
                Long q4 = quizDataList.get(3);
                Long q5 = quizDataList.get(4);
                Long q6 = quizDataList.get(5);
+
+
                Quiz quiz = new Quiz(q1,q2,q3,q4,q5,q6);
                quizData.storeGeographyQuiz(quiz);
+
+               Quiz quiz2 = new Quiz(12,"Tuesday");
                Intent intent = new Intent(MainActivity.this,Questions.class);
                startActivity(intent);
            }

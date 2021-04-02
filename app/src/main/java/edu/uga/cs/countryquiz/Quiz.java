@@ -9,6 +9,25 @@ public class Quiz {
     Long q4;
     Long q5;
     Long q6;
+    int result;
+    String date;
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
 
     public Quiz(Long q1, Long q2, Long q3, Long q4, Long q5, Long q6) {
         this.q1 = q1;
@@ -18,8 +37,13 @@ public class Quiz {
         this.q5 = q5;
         this.q6 = q6;
 
+
     }
 
+    public Quiz(int result, String date){
+        this.result=result;
+        this.date = date;
+    }
     public Long getId() {
         return id;
     }
@@ -27,6 +51,8 @@ public class Quiz {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 
     public Long getQuestion1() {
         return q1;
