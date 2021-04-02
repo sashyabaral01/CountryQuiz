@@ -1,60 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Question">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:id="@+id/ll"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/question_country"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Country"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="... is located in..." />
-
-        <RadioGroup
-            android:id="@+id/questions_radio_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
-
-            <RadioButton
-                android:id="@+id/question_answer_1"
-                android:layout_width="140dp"
+            <TextView
+                android:id="@+id/question_country"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Continent 1" />
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="Country"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
 
-            <RadioButton
-                android:id="@+id/question_answer_2"
-                android:layout_width="140dp"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Continent 2" />
+                android:layout_margin="10dp"
+                android:text="... is located in..." />
 
-            <RadioButton
-                android:id="@+id/question_answer_3"
-                android:layout_width="140dp"
+            <RadioGroup
+                android:id="@+id/questions_radio_group"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Continent 3" />
-        </RadioGroup>
+                android:layout_margin="10dp">
 
-    </LinearLayout>
+                <RadioButton
+                    android:id="@+id/question_answer_1"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:background="#6BDADADA"
+                    android:text="Continent 1" />
 
-</FrameLayout>
+                <RadioButton
+                    android:id="@+id/question_answer_2"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:background="#6BDADADA"
+                    android:text="Continent 2" />
+
+                <RadioButton
+                    android:id="@+id/question_answer_3"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:background="#6BDADADA"
+                    android:text="Continent 3" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/questions_result_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#4CAF50" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

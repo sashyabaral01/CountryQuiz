@@ -7,13 +7,24 @@
     tools:context=".EndFragment">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/end_main_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="END"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        app:layout_constraintBottom_toTopOf="@id/end_sub_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/end_sub_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="please wait..."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/end_main_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>

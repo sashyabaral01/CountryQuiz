@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +67,7 @@ public class Questions extends AppCompatActivity {
 
 
     }
-    public void loadView(PlaceholderFragment frag, TextView countryText, RadioButton radio1, RadioButton radio2, RadioButton radio3, int questionNumber) {
+    public void loadQuestionView(PlaceholderFragment frag, TextView countryText, RadioButton radio1, RadioButton radio2, RadioButton radio3, int questionNumber) {
         pageFrags[questionNumber -1] = frag;
         Country currentCountry = questionsData.get(questionNumber - 1);
         countryText.setText(currentCountry.getCountry());
@@ -76,16 +77,64 @@ public class Questions extends AppCompatActivity {
         radio3.setText(options.get(2));
     }
 
+    public void loadResultsView(PlaceholderFragment frag) {
+        pageFrags[6] = frag;
+    }
+
     public void grade(){
+
+        int correctCount = 0;
+        boolean unansweredQuestionExists = false;
+
         for (int x = 0; x < 6; x++){
             int radioButtonID = pageFrags[x].radioGroup.getCheckedRadioButtonId();
             if (radioButtonID != -1) {
+
                 RadioButton radioButton = pageFrags[x].radioGroup.findViewById(radioButtonID);
-                Log.e("Grade", pageFrags[x].questionNum + " - " + radioButton.getText());
+                boolean correct = questionsData.get(x).getContinent().equals(radioButton.getText());
+                Log.e("Grade", pageFrags[x].questionNum + " - " + radioButton.getText() + " - " + correct);
+
+                if (correct) correctCount++;
             }
-            else
-                Log.e("Grade", pageFrags[x].questionNum + " - " );
+            else {
+                Log.e("Grade", pageFrags[x].questionNum + " - ");
+                unansweredQuestionExists = true;
+            }
         }
+
+        if (unansweredQuestionExists){
+            pageFrags[6].resultsMainText.setText("Not Finished");
+            pageFrags[6].resultsSubText.setText("Please return and answer all questions");
+        }
+        else {
+            pageFrags[6].resultsMainText.setText(correctCount + "/6");
+            pageFrags[6].resultsSubText.setText("Good work");
+
+            for (int x = 0; x < 6; x++){
+                int radioButtonID = pageFrags[x].radioGroup.getCheckedRadioButtonId();
+                RadioButton radioButton = pageFrags[x].radioGroup.findViewById(radioButtonID);
+                boolean correct = questionsData.get(x).getContinent().equals(radioButton.getText());
+
+                pageFrags[x].radioBtn1.setClickable(false);
+                pageFrags[x].radioBtn2.setClickable(false);
+                pageFrags[x].radioBtn3.setClickable(false);
+
+                if (correct) {
+
+                    pageFrags[x].questionResultText.setText("CORRECT!");
+                    pageFrags[x].questionResultText.setTextColor(0xFF4CAF50);
+
+                }
+                else {
+
+                    pageFrags[x].questionResultText.setText("FALSE\nCorrect: " + questionsData.get(x).getContinent());
+                    pageFrags[x].questionResultText.setTextColor(0xFFE91E63);
+
+                }
+            }
+
+        }
+
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -122,9 +171,11 @@ public class Questions extends AppCompatActivity {
 
             if (currentPageIndex != position){
                 currentPageIndex = position;
-                Log.e("Pager", "Slide Event, on Q" + (currentPageIndex + 1));
+                Log.e("Pager", "Slide Event, on page " + (currentPageIndex + 1));
 
-                grade();
+
+                //if entering the end page, grade
+                if (currentPageIndex == 6) grade();
 
                 //save quiz state
 
@@ -137,12 +188,14 @@ public class Questions extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         private int questionNum;
         private TextView countryText;
+        private TextView questionResultText;
         private RadioButton radioBtn1;
         private RadioButton radioBtn2;
         private RadioButton radioBtn3;
         private RadioGroup radioGroup;
 
-        private TextView resultsText;
+        private TextView resultsMainText;
+        private TextView resultsSubText;
 
         private boolean isResultsScreen = false;
 
@@ -181,6 +234,7 @@ public class Questions extends AppCompatActivity {
             if (!isResultsScreen) {
                 rootView = inflater.inflate(R.layout.fragment_question, container, false);
                 countryText = (TextView) rootView.findViewById(R.id.question_country);
+                questionResultText = (TextView) rootView.findViewById(R.id.questions_result_text);
                 radioBtn1 = (RadioButton) rootView.findViewById(R.id.question_answer_1);
                 radioBtn2 = (RadioButton) rootView.findViewById(R.id.question_answer_2);
                 radioBtn3 = (RadioButton) rootView.findViewById(R.id.question_answer_3);
@@ -188,6 +242,8 @@ public class Questions extends AppCompatActivity {
             }
             else {
                 rootView = inflater.inflate(R.layout.fragment_end, container, false);
+                resultsMainText = (TextView) rootView.findViewById(R.id.end_main_text);
+                resultsSubText = (TextView) rootView.findViewById(R.id.end_sub_text);
             }
 
             return rootView;
@@ -197,7 +253,8 @@ public class Questions extends AppCompatActivity {
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             if (Questions.class.isInstance(getActivity())) {
-                if (!isResultsScreen) ((Questions) getActivity()).loadView(this, countryText, radioBtn1, radioBtn2, radioBtn3, questionNum);
+                if (!isResultsScreen) ((Questions) getActivity()).loadQuestionView(this, countryText, radioBtn1, radioBtn2, radioBtn3, questionNum);
+                else ((Questions) getActivity()).loadResultsView(this);
             }
         }
     }
