@@ -48,7 +48,7 @@
 
                 <RadioButton
                     android:id="@+id/question_answer_1"
-                    android:layout_width="140dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:background="#6BDADADA"
@@ -56,7 +56,7 @@
 
                 <RadioButton
                     android:id="@+id/question_answer_2"
-                    android:layout_width="140dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:background="#6BDADADA"
@@ -64,7 +64,7 @@
 
                 <RadioButton
                     android:id="@+id/question_answer_3"
-                    android:layout_width="140dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:background="#6BDADADA"
