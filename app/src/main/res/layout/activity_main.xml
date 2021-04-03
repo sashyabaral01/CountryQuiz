@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/quiz_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Quiz"
@@ -18,7 +18,7 @@
         app:layout_constraintVertical_bias="0.417" />
 
     <Button
-        android:id="@+id/resultsBtn"
+        android:id="@+id/results_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View Past Results"
@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/quiz_button"
         app:layout_constraintVertical_bias="0.171" />
 
     <TextView

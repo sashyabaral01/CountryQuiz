@@ -1,16 +1,10 @@
 package edu.uga.cs.countryquiz;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,8 +12,6 @@ import com.opencsv.CSVReader;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final String DEBUG = "Testing";
@@ -29,12 +21,13 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button startQuiz = findViewById(R.id.button);
+        Button startQuiz = findViewById(R.id.quiz_button);
+        Button viewResults = findViewById(R.id.results_button);
         countryData = new CountryData(this);
         Quiz quiz = null;
         quizData = new QuizData(this);
         readFromCSV();
-       startQuiz.setOnClickListener(new View.OnClickListener() {
+        startQuiz.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                quizData.open();
@@ -60,7 +53,15 @@ public class MainActivity extends AppCompatActivity {
                Intent intent = new Intent(MainActivity.this,Questions.class);
                startActivity(intent);
            }
-       });
+        });
+        viewResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this,ReviewQuizResults.class);
+                startActivity(intent);
+            }
+        });
     }
     /*
     Storing the data asynchronously from the CSV to the SQLiteDB
