@@ -127,7 +127,7 @@ public class Questions extends AppCompatActivity {
                 }
                 else {
 
-                    pageFrags[x].questionResultText.setText("FALSE\nCorrect: " + questionsData.get(x).getContinent());
+                    pageFrags[x].questionResultText.setText("FALSE\nAnswer: " + questionsData.get(x).getContinent());
                     pageFrags[x].questionResultText.setTextColor(0xFFE91E63);
 
                 }
