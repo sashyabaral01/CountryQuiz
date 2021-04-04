@@ -61,7 +61,7 @@ public class Questions extends AppCompatActivity {
         quizData = new QuizData(this);
         quizData.open();
         countryData.open();
-        questionsData =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
+        new RetrieveRandomQuestion().execute();
         System.out.println(questionsData);
 
         //create layout
@@ -408,12 +408,7 @@ public class Questions extends AppCompatActivity {
             }
 
         }
-
-
-
-
     }
-
     private class StoreQuizAsyncTask extends AsyncTask<Quiz, Void, Void> {
         // in the onCreateMethod
         @Override
@@ -424,21 +419,14 @@ public class Questions extends AppCompatActivity {
             return null;
         }
     }
-
-
-    private class RetrieveRandomQuestion extends AsyncTask<Void, Void, List<Country>> {
+    private class RetrieveRandomQuestion extends AsyncTask<Void, Void, List<Country> > {
         @Override
-        protected List<Country> doInBackground(Void... voids) {
-
-            List<Country> randomQuizzes;
-            quizData.open();
-
-            randomQuizzes =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
-
-
-            return randomQuizzes;
-
+        protected List<Country> doInBackground(Void... params) {
+            questionsData =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
+            return questionsData;
         }
+
+
         // in the onCreateMethod
 
     }

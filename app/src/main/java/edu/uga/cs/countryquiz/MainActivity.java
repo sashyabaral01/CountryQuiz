@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 quizData.open();
 
                 Intent intent = new Intent(MainActivity.this,ReviewQuizResults.class);
-                quizData.deleteNullRows();
+                new DeleteNullRowsWriterTask().execute();
                 startActivity(intent);
             }
         });
@@ -92,16 +92,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class RetrieveRandomDBWriterTask extends AsyncTask<List<Quiz>,Void,Void>{
-
-  
-
-
+    private class DeleteNullRowsWriterTask extends AsyncTask<List<Quiz>,Void,Void>{
         @Override
-        protected Void doInBackground(List<Quiz>... lists) {
+        protected Void doInBackground(List<Quiz>... lists)
+        {
+            quizData.deleteNullRows();
             return null;
         }
     }
+
+
     @Override
     public void onResume() {
         // open the database in onResume
