@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     /***
-    Storing the data asynchronously from the CSV to the SQLiteDB
-    *
+     * Reads from the CSV file
      */
     private void readFromCSV() {
         countryData.open();
@@ -94,10 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /***
-    *
-     * This saves the country for the async task
-     *
-     *
+     * Private class to write to database
      */
     private class CountryDBWriterTask extends AsyncTask<Country, Void, Country> {
         @Override

@@ -73,7 +73,7 @@ public class QuizData {
 
     /***
      * Shuffles the questions selected
-     * @param countryListId holder to fill
+     * @param countryListId
      */
 
     public List<Long> retrieveRandomQuestionsById(List<Long> countryListId){
@@ -89,9 +89,6 @@ public class QuizData {
         }
         return shuffledListQuestions;
     }
-
-
-
     /***
      * Retrieves the recent row
      * @param:none
@@ -121,9 +118,6 @@ public class QuizData {
         System.out.println("From inside the method: " +recentRow);
         return recentRow;
     }
-
-
-
     /***
      * Converts the randomly selected ids to the question
      * @param ids Are used to help convert the quiz id to question
@@ -145,19 +139,12 @@ public class QuizData {
         }
         return convertedQuestions;
     }
-
-
     /***
      * Opens the database
      */
     public void open(){
         db = geographyQuizDbHelper.getWritableDatabase();
     }
-
-
-
-
-
     /***
      * Closes the database
      */
@@ -166,20 +153,12 @@ public class QuizData {
             geographyQuizDbHelper.close();
         }
     }
-
-
-
-
-
-
     /***
      * Retrieves all the quizzes
      */
-
     public List<Quiz> retrieveAllQuizzes() {
         ArrayList<Quiz> quizzes = new ArrayList<>();
         Cursor cursor = null;
-
         try {
             // Execute the select query and get the Cursor to iterate over the retrieved rows
             cursor = db.query( QuizDBHelper.TABLE_GEOGRAPHYQUIZZES, allColumns,
@@ -215,19 +194,13 @@ public class QuizData {
         // return a list of retrieved job leads
         return quizzes;
     }
-
-
-
     /***
      *Generates random choices
      * @param correctContinent
+     *
      */
-
     public ArrayList<String> getChoices(String correctContinent){
-
-
         ArrayList<String> choices = new ArrayList<>();
-
         ArrayList<String> radioTextArray = new ArrayList<>();
         choices.add("Africa");
         choices.add("Asia");
@@ -247,11 +220,9 @@ public class QuizData {
         Collections.shuffle(radioTextArray);
         return radioTextArray;
     }
-
-
-
     /***
      * Deletes partially completed quizzes from the db
+     *
      */
     public void deleteNullRows(){
 

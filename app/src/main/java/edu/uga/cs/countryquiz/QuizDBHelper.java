@@ -46,6 +46,10 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     public static final String GEOGRAPHYQUIZZES_COLUMN_RESULTS="Results";
     public static final String GEOGRAPHYQUIZZES_COLUMN_DATE="Date";
 
+
+
+    //creates another table for the quizzes;
+
     private static final String CREATE_GEOGRAPHYQUIZRESULTS =
             "create table " + TABLE_GEOGRAPHYQUIZZES + " ("
                     + GEOGRAPHYQUIZZES_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -61,10 +65,20 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     //Private reference to the single instance
     private static QuizDBHelper helperInstance;
 
+    /***
+     *
+     * @param context
+     */
     private QuizDBHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);
     }
 
+
+    /***
+     * This synchronizes the db classes.
+     * @param context
+     * @return helperInstance
+     */
     public static synchronized QuizDBHelper getInstance(Context context){
         //If DB has not been instantiated
         if (helperInstance == null){

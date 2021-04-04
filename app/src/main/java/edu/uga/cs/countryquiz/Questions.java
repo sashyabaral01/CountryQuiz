@@ -420,6 +420,10 @@ public class Questions extends AppCompatActivity {
 
         }
     }
+
+    /***
+     * Stores the quiz result in an asynchronous matter
+     */
     private class StoreQuizAsyncTask extends AsyncTask<Quiz, Void, Void> {
         // in the onCreateMethod
         @Override
@@ -430,6 +434,10 @@ public class Questions extends AppCompatActivity {
             return null;
         }
     }
+
+    /***
+     * Retrieves a random questoin
+     */
     private class RetrieveRandomQuestion extends AsyncTask<Void, Void, List<Country> > {
         @Override
         protected List<Country> doInBackground(Void... params) {
