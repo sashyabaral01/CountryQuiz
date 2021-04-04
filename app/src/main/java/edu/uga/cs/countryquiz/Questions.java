@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -271,11 +273,19 @@ public class Questions extends AppCompatActivity {
                 //if entering the end page, grade
                 if (currentPageIndex == QUESTION_COUNT) {
 
+                    Quiz quiz=null;
+
+
                     //grade quiz
                     int correctCount = grade();
 
                     //if quiz is finished, save
                     if (correctCount != -1){
+                        Date date = new Date();
+                        // display time and date using toString()
+                        System.out.println(date.toString());
+                        quiz = new Quiz(correctCount, date.toString());
+                        new StoreQuizAsyncTask().execute(quiz);
 
                     }
 
@@ -388,6 +398,7 @@ public class Questions extends AppCompatActivity {
          */
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
+
             super.onActivityCreated(savedInstanceState);
 
             //Load view for the fragment
@@ -398,6 +409,20 @@ public class Questions extends AppCompatActivity {
 
         }
 
+
+
+
+    }
+
+    private class StoreQuizAsyncTask extends AsyncTask<Quiz, Void, Void> {
+        // in the onCreateMethod
+        @Override
+        protected Void doInBackground(Quiz ... quizzes) {
+            quizData.open();
+            quizData.storeResultsandDate(quizzes[0]);
+            //Log.d(DEBUG_TAG, "storeResult: quiz result stored ");
+            return null;
+        }
     }
 
 }

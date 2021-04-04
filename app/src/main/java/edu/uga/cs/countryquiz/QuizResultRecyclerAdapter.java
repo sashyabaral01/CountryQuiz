@@ -30,8 +30,8 @@ public class QuizResultRecyclerAdapter extends RecyclerView.Adapter<QuizResultRe
         public QuizResultHolder(View itemView ) {
             super(itemView);
 
-            dateText = (TextView) itemView.findViewById( R.id.quiz_result_date);
-            scoreText = (TextView) itemView.findViewById( R.id.quiz_result_score);
+            dateText = itemView.findViewById( R.id.quiz_result_date);
+            scoreText = itemView.findViewById( R.id.quiz_result_score);
         }
     }
 
@@ -52,8 +52,10 @@ public class QuizResultRecyclerAdapter extends RecyclerView.Adapter<QuizResultRe
         Quiz quiz = quizList.get( position );
 
 
-        //holder.dateText.setText( quiz.getDate());
-        //holder.scoreText.setText( quiz.getScore() );
+        System.out.println(quizList.get(position));
+
+        holder.dateText.setText( quiz.getDate());
+        holder.scoreText.setText( String.valueOf(quiz.getResult()));
     }
 
     @Override

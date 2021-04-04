@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,7 +46,20 @@ public class QuizData {
     }
 
 
+
     public void storeResultsandDate(Quiz quiz){
+
+
+
+
+
+        String query = "UPDATE geographyquizzes set Results = " + quiz.getResult() + ", " + "Date = '" +quiz.getDate()   + "' WHERE id = (SELECT MAX(id) FROM geographyquizzes)";
+
+
+
+        System.out.println("Query : " + query);
+
+        db.execSQL(query);
 
     }
 
@@ -117,6 +131,48 @@ public class QuizData {
     }
 
 
+
+
+
+    public List<Quiz> retrieveAllQuizzes() {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
+        Cursor cursor = null;
+
+        try {
+            // Execute the select query and get the Cursor to iterate over the retrieved rows
+            cursor = db.query( QuizDBHelper.TABLE_GEOGRAPHYQUIZZES, allColumns,
+                    null, null, null, null, null );
+
+            // collect all job leads into a List
+            if( cursor.getCount() > 0 ) {
+                while( cursor.moveToNext() ) {
+                    System.out.println("Entering the last function");
+                    // get all attribute values of this job lead
+                    long id = cursor.getLong( cursor.getColumnIndex( QuizDBHelper.GEOGRAPHYQUIZZES_COLUMN_ID ) );
+                    String date = cursor.getString( cursor.getColumnIndex( QuizDBHelper.GEOGRAPHYQUIZZES_COLUMN_DATE ) );
+                    int  result = cursor.getInt( cursor.getColumnIndex( QuizDBHelper.GEOGRAPHYQUIZZES_COLUMN_RESULTS ) );
+
+
+                    Quiz quizInformation = new Quiz(result,date);
+                    quizInformation.setId( id ); // set the id (the primary key) of this object
+                    // add it to the list
+                    quizzes.add( quizInformation );
+                }
+            }
+            Log.d( DEBUG_TAG, "Number of records from DB: " + cursor.getCount() );
+        }
+        catch( Exception e ){
+            Log.d( DEBUG_TAG, "Exception caught: " + e );
+        }
+        finally{
+            // we should close the cursor
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        // return a list of retrieved job leads
+        return quizzes;
+    }
 
     public ArrayList<String> getChoices(String correctContinent){
 

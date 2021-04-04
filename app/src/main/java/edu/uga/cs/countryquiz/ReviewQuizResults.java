@@ -41,7 +41,7 @@ public class ReviewQuizResults extends AppCompatActivity {
         // Execute the retrieval of the job leads in an asynchronous way,
         // without blocking the UI thread.
 
-        //new QuizResultDBReaderTask().execute();
+        new QuizResultDBReaderTask().execute();
 
     }
 
@@ -56,7 +56,7 @@ public class ReviewQuizResults extends AppCompatActivity {
         protected List<Quiz> doInBackground( Void... params ) {
             quizData.open();
 
-            //quizList = quizData.retrieveAllJobLeads();
+            quizList = quizData.retrieveAllQuizzes();
 
             return quizList;
         }
