@@ -32,7 +32,7 @@ public class QuizData {
     public QuizData(Context context) {
         this.geographyQuizDbHelper = QuizDBHelper.getInstance(context);
     }
-    public void storeGeographyQuiz(Quiz quiz){
+    public void generateRandomQuizzes(Quiz quiz){
         ContentValues values = new ContentValues();
         values.put(QuizDBHelper.GEOGRAPHYQUIZZES_COLUMN_Q1, quiz.getQuestion1());
         System.out.println("From QuizData: " +  quiz.getQuestion1());
@@ -49,16 +49,8 @@ public class QuizData {
 
     public void storeResultsandDate(Quiz quiz){
 
-
-
-
-
         String query = "UPDATE geographyquizzes set Results = " + quiz.getResult() + ", " + "Date = '" +quiz.getDate()   + "' WHERE id = (SELECT MAX(id) FROM geographyquizzes)";
-
-
-
         System.out.println("Query : " + query);
-
         db.execSQL(query);
 
     }
@@ -198,5 +190,17 @@ public class QuizData {
         choices.remove(randomIndexTwo);
         Collections.shuffle(radioTextArray);
         return radioTextArray;
+    }
+
+
+    public void deleteNullRows(){
+
+
+        String query2 = "DELETE FROM GEOGRAPHYQUIZZES WHERE Date IS NULL";
+
+
+        db.execSQL(query2);
+
+
     }
 }

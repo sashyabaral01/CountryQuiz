@@ -54,8 +54,12 @@ public class QuizResultRecyclerAdapter extends RecyclerView.Adapter<QuizResultRe
 
         System.out.println(quizList.get(position));
 
-        holder.dateText.setText( quiz.getDate());
-        holder.scoreText.setText( String.valueOf(quiz.getResult()));
+        if(quiz.getDate()!=null && quiz.getResult()!=0) {
+            System.out.println("The date is  null");
+
+            holder.dateText.setText("Date: " + quiz.getDate());
+            holder.scoreText.setText("Score: " + String.valueOf(quiz.getResult()));
+        }
     }
 
     @Override

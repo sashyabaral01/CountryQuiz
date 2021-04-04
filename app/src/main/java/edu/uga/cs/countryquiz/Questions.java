@@ -425,4 +425,22 @@ public class Questions extends AppCompatActivity {
         }
     }
 
+
+    private class RetrieveRandomQuestion extends AsyncTask<Void, Void, List<Country>> {
+        @Override
+        protected List<Country> doInBackground(Void... voids) {
+
+            List<Country> randomQuizzes;
+            quizData.open();
+
+            randomQuizzes =  quizData.convertQuizIdToQuestions(quizData.retrieveRecentRow());
+
+
+            return randomQuizzes;
+
+        }
+        // in the onCreateMethod
+
+    }
+
 }

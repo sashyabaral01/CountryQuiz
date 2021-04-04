@@ -38,6 +38,7 @@ public class ReviewQuizResults extends AppCompatActivity {
         // that class is a singleton class.
         quizData = new QuizData( this );
 
+
         // Execute the retrieval of the job leads in an asynchronous way,
         // without blocking the UI thread.
 

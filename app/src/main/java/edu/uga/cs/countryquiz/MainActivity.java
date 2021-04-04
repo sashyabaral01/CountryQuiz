@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                Long q5 = quizDataList.get(4);
                Long q6 = quizDataList.get(5);
                Quiz quiz = new Quiz(q1,q2,q3,q4,q5,q6);
-               quizData.storeGeographyQuiz(quiz);
+               quizData.generateRandomQuizzes(quiz);
                Intent intent = new Intent(MainActivity.this,Questions.class);
                startActivity(intent);
            }
@@ -48,8 +48,10 @@ public class MainActivity extends AppCompatActivity {
         viewResults.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                quizData.open();
 
                 Intent intent = new Intent(MainActivity.this,ReviewQuizResults.class);
+                quizData.deleteNullRows();
                 startActivity(intent);
             }
         });
@@ -90,14 +92,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class RetrieveRandomDBWriterTask extends AsyncTask<Void,Void,Void>{
+    private class RetrieveRandomDBWriterTask extends AsyncTask<List<Quiz>,Void,Void>{
+
+  
+
 
         @Override
-        protected Void doInBackground(Void... voids) {
-
-
-
-
+        protected Void doInBackground(List<Quiz>... lists) {
             return null;
         }
     }
