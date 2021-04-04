@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -77,6 +79,7 @@ public class Questions extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         mViewPager.setOffscreenPageLimit(10);
+
 
     }
 
@@ -268,7 +271,7 @@ public class Questions extends AppCompatActivity {
             //event on when you switch to a new page
             if (currentPageIndex != position){
                 currentPageIndex = position;
-                Log.e("Pager", "Slide Event, on page " + (currentPageIndex + 1));
+                //Log.e("Pager", "Slide Event, on page " + (currentPageIndex + 1));
 
                 //if entering the end page, grade
                 if (currentPageIndex == QUESTION_COUNT) {
@@ -283,7 +286,7 @@ public class Questions extends AppCompatActivity {
                     if (correctCount != -1){
                         Date date = new Date();
                         // display time and date using toString()
-                        System.out.println(date.toString());
+                        //System.out.println(date.toString());
                         quiz = new Quiz(correctCount, date.toString());
                         new StoreQuizAsyncTask().execute(quiz);
 
@@ -387,6 +390,14 @@ public class Questions extends AppCompatActivity {
                 rootView = inflater.inflate(R.layout.fragment_end, container, false);
                 resultsMainText = (TextView) rootView.findViewById(R.id.end_main_text);
                 resultsSubText = (TextView) rootView.findViewById(R.id.end_sub_text);
+                Button exitButton = (Button)rootView.findViewById(R.id.results_exit_button);
+                exitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(((Questions) getActivity()),MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
             return rootView;
 

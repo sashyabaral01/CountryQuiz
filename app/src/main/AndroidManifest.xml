@@ -11,7 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CountryQuiz"
         android:windowSoftInputMode="adjustPan">
-        <activity android:name=".ReviewQuizResults"></activity>
+        <activity
+            android:name=".ReviewQuizResults"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".FinalResults" />
         <activity
             android:name=".MainActivity"

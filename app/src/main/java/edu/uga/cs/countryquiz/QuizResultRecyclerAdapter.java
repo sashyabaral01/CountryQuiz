@@ -10,23 +10,33 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * This is an adapter class for the RecyclerView to show all job leads.
+ * This is an adapter class for the RecyclerView to show all quizzes
  */
 public class QuizResultRecyclerAdapter extends RecyclerView.Adapter<QuizResultRecyclerAdapter.QuizResultHolder> {
 
-
+    //list of quizes
     private List<Quiz> quizList;
 
+    /***
+     * Constructor
+     * @param quizList data
+     */
     public QuizResultRecyclerAdapter( List<Quiz> quizList ) {
         this.quizList = quizList;
     }
 
-    // The adapter must have a ViewHolder class to "hold" one item to show.
+    /***
+     * This class represents the "holder" on the recycler view
+     */
     class QuizResultHolder extends RecyclerView.ViewHolder {
 
         TextView dateText;
         TextView scoreText;
 
+        /***
+         * Constructor
+         * @param itemView view
+         */
         public QuizResultHolder(View itemView ) {
             super(itemView);
 
@@ -35,18 +45,23 @@ public class QuizResultRecyclerAdapter extends RecyclerView.Adapter<QuizResultRe
         }
     }
 
+    /***
+     * We need to inflate the view here
+     * @param parent where to create the view
+     * @param viewType view type
+     * @return
+     */
     @Override
     public QuizResultHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
-        // We need to make sure that all CardViews have the same, full width, allowed by the parent view.
-        // This is a bit tricky, and we must provide the parent reference (the second param of inflate)
-        // and false as the third parameter (don't attach to root).
-        // Consequently, the parent view's (the RecyclerView) width will be used (match_parent).
         View view = LayoutInflater.from( parent.getContext()).inflate( R.layout.quiz_result, parent, false );
         return new QuizResultHolder( view );
     }
 
-    // This method fills in the values of a holder to show a JobLead.
-    // The position parameter indicates the position on the list of jobs list.
+    /***
+     * Fill the values of the holder
+     * @param holder holder to fill
+     * @param position position in list
+     */
     @Override
     public void onBindViewHolder( QuizResultHolder holder, int position ) {
         Quiz quiz = quizList.get( position );
@@ -54,14 +69,18 @@ public class QuizResultRecyclerAdapter extends RecyclerView.Adapter<QuizResultRe
 
         System.out.println(quizList.get(position));
 
-        if(quiz.getDate()!=null && quiz.getResult()!=0) {
+        if(quiz.getDate()!=null) {
             System.out.println("The date is  null");
 
             holder.dateText.setText("Date: " + quiz.getDate());
-            holder.scoreText.setText("Score: " + String.valueOf(quiz.getResult()));
+            holder.scoreText.setText("Score: " + String.valueOf(quiz.getResult()) + "/6");
         }
     }
 
+    /***
+     * Ammount of quiz items
+     * @return count
+     */
     @Override
     public int getItemCount() {
         return quizList.size();

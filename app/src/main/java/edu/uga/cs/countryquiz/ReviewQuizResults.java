@@ -10,6 +10,9 @@ import android.util.Log;
 
 import java.util.List;
 
+/***
+ * This class represents the quiz results page on the app, where users can see results of past quizzes
+ */
 public class ReviewQuizResults extends AppCompatActivity {
 
     //recycler view
@@ -20,39 +23,42 @@ public class ReviewQuizResults extends AppCompatActivity {
     private QuizData quizData = null;
     private List<Quiz> quizList;
 
+    /***
+     * On create we need to set the visuals and begin the loading of data
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
 
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_review_quiz_results );
 
+        //find views
         recyclerView = (RecyclerView) findViewById( R.id.recycler_view );
 
         // use a linear layout manager for the recycler view
         layoutManager = new LinearLayoutManager(this );
         recyclerView.setLayoutManager( layoutManager );
 
-        // Create a JobLeadsData instance, since we will need to save a new JobLead to the dn.
-        // Note that even though more activites may create their own instances of the JobLeadsData
-        // class, we will be using a single instance of the JobLeadsDBHelper object, since
-        // that class is a singleton class.
+        // Create a quiz dara
         quizData = new QuizData( this );
 
-
-        // Execute the retrieval of the job leads in an asynchronous way,
-        // without blocking the UI thread.
-
+        //retrive quiz data
         new QuizResultDBReaderTask().execute();
 
     }
 
-    // This is an AsyncTask class (it extends AsyncTask) to perform DB reading of job leads, asynchronously.
+    /***
+     * This class is made of reading the saved quiz results in the database asynchronously
+     */
     private class QuizResultDBReaderTask extends AsyncTask<Void, Void, List<Quiz>> {
 
-        // This method will run as a background process to read from db.
-        // It returns a list of retrieved JobLead objects.
-        // It will be automatically invoked by Android, when we call the execute method
-        // in the onCreate callback (the job leads review activity is started).
+
+        /***
+         * Background task of retrieving quiz data
+         * @param params parameters
+         * @return quiz data
+         */
         @Override
         protected List<Quiz> doInBackground( Void... params ) {
             quizData.open();
@@ -62,10 +68,10 @@ public class ReviewQuizResults extends AppCompatActivity {
             return quizList;
         }
 
-        // This method will be automatically called by Android once the db reading
-        // background process is finished.  It will then create and set an adapter to provide
-        // values for the RecyclerView.
-        // onPostExecute is like the notify method in an asynchronous method call discussed in class.
+        /***
+         * Add to recycler view
+         * @param jobLeadsList data
+         */
         @Override
         protected void onPostExecute( List<Quiz> jobLeadsList ) {
             super.onPostExecute(jobLeadsList);
@@ -74,6 +80,9 @@ public class ReviewQuizResults extends AppCompatActivity {
         }
     }
 
+    /***
+     * On resume we need to open the data if it was close
+     */
     @Override
     protected void onResume() {
         // open the database in onResume
@@ -82,6 +91,9 @@ public class ReviewQuizResults extends AppCompatActivity {
         super.onResume();
     }
 
+    /***
+     * on pause, close the data
+     */
     @Override
     protected void onPause() {
         // close the database in onPause
