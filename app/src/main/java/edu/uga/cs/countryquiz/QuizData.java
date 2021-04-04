@@ -180,7 +180,6 @@ public class QuizData {
         choices.add("Oceania");
         radioTextArray.add(correctContinent);
         choices.remove(correctContinent);
-        int size = choices.size();
         Random random = new Random();
         int randomIndexOne = random.nextInt(choices.size());
         radioTextArray.add(choices.get(randomIndexOne));

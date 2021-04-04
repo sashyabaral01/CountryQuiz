@@ -13,6 +13,8 @@ import com.opencsv.CSVReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
     private static final String DEBUG = "Testing";
     private CountryData countryData = null;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                quizData.open();
+
                List<Long> questionById = countryData.retrieveAllQuestionsById();
                List<Long> quizDataList = quizData.retrieveRandomQuestionsById(questionById);
                Long q1 = quizDataList.get(0);
@@ -40,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
                Long q5 = quizDataList.get(4);
                Long q6 = quizDataList.get(5);
                Quiz quiz = new Quiz(q1,q2,q3,q4,q5,q6);
-               quizData.generateRandomQuizzes(quiz);
+               new RandomQuizStore().execute(quiz);
+
+
+
                Intent intent = new Intent(MainActivity.this,Questions.class);
                startActivity(intent);
            }
@@ -97,6 +103,18 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(List<Quiz>... lists)
         {
             quizData.deleteNullRows();
+            return null;
+        }
+    }
+
+
+    private class RandomQuizStore extends AsyncTask<Quiz, Void, Void> {
+        // in the onCreateMethod
+        @Override
+        protected Void doInBackground(Quiz ... quizzes) {
+            quizData.open();
+            quizData.generateRandomQuizzes(quizzes[0]);
+            //Log.d(DEBUG_TAG, "storeResult: quiz result stored ");
             return null;
         }
     }
