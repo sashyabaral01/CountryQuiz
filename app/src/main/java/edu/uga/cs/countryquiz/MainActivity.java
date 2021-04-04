@@ -15,6 +15,10 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Random;
 
+
+/***
+ * The main activity is the class that navigates the user to either starting a quiz or viewing past results
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String DEBUG = "Testing";
     private CountryData countryData = null;
@@ -42,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
                Long q4 = quizDataList.get(3);
                Long q5 = quizDataList.get(4);
                Long q6 = quizDataList.get(5);
-               Quiz quiz = new Quiz(q1,q2,q3,q4,q5,q6);
-               new RandomQuizStore().execute(quiz);
+               Quiz quiz = new Quiz(q1,q2,q3,q4,q5,q6); //storing the quiz
+               new RandomQuizStore().execute(quiz); //generating a random quiz
 
 
 
@@ -57,13 +61,14 @@ public class MainActivity extends AppCompatActivity {
                 quizData.open();
 
                 Intent intent = new Intent(MainActivity.this,ReviewQuizResults.class);
-                new DeleteNullRowsWriterTask().execute();
+                new DeleteNullRowsWriterTask().execute(); //deletes unnecessary rows
                 startActivity(intent);
             }
         });
     }
-    /*
+    /***
     Storing the data asynchronously from the CSV to the SQLiteDB
+    *
      */
     private void readFromCSV() {
         countryData.open();
@@ -86,6 +91,14 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Data is already filled");
         }
     }
+
+
+    /***
+    *
+     * This saves the country for the async task
+     *
+     *
+     */
     private class CountryDBWriterTask extends AsyncTask<Country, Void, Country> {
         @Override
         protected Country doInBackground(Country... country) {
@@ -98,6 +111,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    /***
+
+     * Deletes an empty row for a partial quiz
+     */
+
     private class DeleteNullRowsWriterTask extends AsyncTask<List<Quiz>,Void,Void>{
         @Override
         protected Void doInBackground(List<Quiz>... lists)
@@ -107,6 +126,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
+    /***
+     * Storing random quizzes to display once the quiz is started
+     */
 
     private class RandomQuizStore extends AsyncTask<Quiz, Void, Void> {
         // in the onCreateMethod
@@ -118,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+
 
 
     @Override

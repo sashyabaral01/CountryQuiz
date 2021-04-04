@@ -55,7 +55,8 @@ public class Country {
 
     /**
      * Method that sets private member id to {id}
-     * @param id The long to set the private member value to*/
+     * @param id The long to set the private member value to
+     **/
     public void setId(long id) {
         this.id = id;
     }

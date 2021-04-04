@@ -12,6 +12,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+
+/***
+ * The quizdata class includes several database operations that are necessary for the quiz to run
+ */
+
 public class QuizData {
     private static final String DEBUG_TAG = "Test: ";
     private QuizData quizData;
@@ -29,9 +34,18 @@ public class QuizData {
             QuizDBHelper.GEOGRAPHYQUIZZES_COLUMN_Q6,
             QuizDBHelper.GEOGRAPHYQUIZZES_COLUMN_RESULTS
     };
+
+    /***
+     * Creates database context
+     * @param context holder to fill
+     */
     public QuizData(Context context) {
         this.geographyQuizDbHelper = QuizDBHelper.getInstance(context);
     }
+    /***
+     * Generates a random quiz
+     * @param quiz holder to fill
+     */
     public void generateRandomQuizzes(Quiz quiz){
         ContentValues values = new ContentValues();
         values.put(QuizDBHelper.GEOGRAPHYQUIZZES_COLUMN_Q1, quiz.getQuestion1());
@@ -44,9 +58,10 @@ public class QuizData {
         long id = db.insert(QuizDBHelper.TABLE_GEOGRAPHYQUIZZES,null, values);
         quiz.setId(id);
     }
-
-
-
+    /***
+     * Adds the quiz date and result after the quiz is finished
+     * @param quiz
+     */
     public void storeResultsandDate(Quiz quiz){
 
         String query = "UPDATE geographyquizzes set Results = " + quiz.getResult() + ", " + "Date = '" +quiz.getDate()   + "' WHERE id = (SELECT MAX(id) FROM geographyquizzes)";
@@ -54,6 +69,12 @@ public class QuizData {
         db.execSQL(query);
 
     }
+
+
+    /***
+     * Shuffles the questions selected
+     * @param countryListId holder to fill
+     */
 
     public List<Long> retrieveRandomQuestionsById(List<Long> countryListId){
         List<Long> randomQuestionsId = new ArrayList<>();
@@ -70,6 +91,11 @@ public class QuizData {
     }
 
 
+
+    /***
+     * Retrieves the recent row
+     * @param:none
+     */
     public List<Long> retrieveRecentRow(){
         List<Long> recentRow = new ArrayList<>();
         Quiz quiz1 = null;
@@ -96,6 +122,13 @@ public class QuizData {
         return recentRow;
     }
 
+
+
+    /***
+     * Converts the randomly selected ids to the question
+     * @param ids Are used to help convert the quiz id to question
+     */
+
     public List<Country> convertQuizIdToQuestions(List<Long> ids){
         System.out.println("Entered function");
         List<Country> convertedQuestions = new ArrayList<>();
@@ -112,10 +145,22 @@ public class QuizData {
         }
         return convertedQuestions;
     }
+
+
+    /***
+     * Opens the database
+     */
     public void open(){
         db = geographyQuizDbHelper.getWritableDatabase();
     }
-    //Close the database connection
+
+
+
+
+
+    /***
+     * Closes the database
+     */
     public void close(){
         if (geographyQuizDbHelper != null){
             geographyQuizDbHelper.close();
@@ -125,6 +170,11 @@ public class QuizData {
 
 
 
+
+
+    /***
+     * Retrieves all the quizzes
+     */
 
     public List<Quiz> retrieveAllQuizzes() {
         ArrayList<Quiz> quizzes = new ArrayList<>();
@@ -166,6 +216,13 @@ public class QuizData {
         return quizzes;
     }
 
+
+
+    /***
+     *Generates random choices
+     * @param correctContinent
+     */
+
     public ArrayList<String> getChoices(String correctContinent){
 
 
@@ -192,6 +249,10 @@ public class QuizData {
     }
 
 
+
+    /***
+     * Deletes partially completed quizzes from the db
+     */
     public void deleteNullRows(){
 
 

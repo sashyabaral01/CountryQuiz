@@ -10,6 +10,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/***
+ * The CountryData class is used to help with database operations
+ */
 public class CountryData {
     private static final String DEBUG_TAG = "Test: ";
     //Private members
@@ -20,18 +24,37 @@ public class CountryData {
             QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_COUNTRY,
             QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_CONTINENT
     };
+
+
+    /***
+     * @param context
+     * Creates the context of the class
+     */
     public CountryData(Context context){
         this.geographyQuestionsDbHelper = QuizDBHelper.getInstance(context);
     }
 
+
+    /***
+     * Opens the database
+     */
     public void open(){
         db = geographyQuestionsDbHelper.getWritableDatabase();
     }
+
+    /***
+     * Closes the database
+     */
     public void close(){
         if (geographyQuestionsDbHelper != null){
             geographyQuestionsDbHelper.close();
         }
     }
+
+
+    /***
+     * Retrieves all the questions
+     */
     public List<Country> retrieveGeographyQuestions() {
         ArrayList<Country> questions = new ArrayList<>();
         Cursor cursor = null;
@@ -66,6 +89,12 @@ public class CountryData {
         }
         return questions;
     }
+
+
+    /***
+     * Storest he geographyquestions
+     * @param geographyQuestion
+     */
     public Country storeGeographyQuestion(Country geographyQuestion){
         ContentValues values = new ContentValues();
         values.put(QuizDBHelper.GEOGRAPHYQUESTIONS_COLUMN_COUNTRY, geographyQuestion.getCountry());
@@ -74,6 +103,12 @@ public class CountryData {
         geographyQuestion.setId(id);
         return geographyQuestion;
     }
+
+
+
+    /***
+     * Retrieves the questions and has the id stored
+     */
     public List<Long> retrieveAllQuestionsById() {
         ArrayList<Long> questionsById = new ArrayList<>();
         Cursor cursor = null;
