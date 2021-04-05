@@ -388,7 +388,7 @@ public class Questions extends AppCompatActivity {
             //if results screen
             else {
                 rootView = inflater.inflate(R.layout.fragment_end, container, false);
-                resultsMainText = (TextView) rootView.findViewById(R.id.end_main_text);
+                resultsMainText =  (TextView) rootView.findViewById(R.id.end_main_text);
                 resultsSubText = (TextView) rootView.findViewById(R.id.end_sub_text);
                 Button exitButton = (Button)rootView.findViewById(R.id.results_exit_button);
                 exitButton.setOnClickListener(new View.OnClickListener() {
@@ -436,7 +436,7 @@ public class Questions extends AppCompatActivity {
     }
 
     /***
-     * Retrieves a random questoin
+     * Retrieves a random questions
      */
     private class RetrieveRandomQuestion extends AsyncTask<Void, Void, List<Country> > {
         @Override

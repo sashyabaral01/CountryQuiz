@@ -104,8 +104,6 @@ public class CountryData {
         return geographyQuestion;
     }
 
-
-
     /***
      * Retrieves the questions and has the id stored
      */

@@ -66,7 +66,7 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     private static QuizDBHelper helperInstance;
 
     /***
-     *
+     *Important for creating singleton pattern
      * @param context
      */
     private QuizDBHelper(Context context){
@@ -86,6 +86,11 @@ public class QuizDBHelper extends SQLiteOpenHelper {
         }
         return helperInstance;
     }
+
+    /***
+     * This creates the tables
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d("CUSTOM", "DBHelper onCreate called");
@@ -93,6 +98,13 @@ public class QuizDBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_GEOGRAPHYQUIZRESULTS);
 
     }
+
+    /***
+     * Upgrades the database
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Drop tables and recreate them if the version has changed
