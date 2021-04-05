@@ -16,7 +16,7 @@ public class Country {
      * Returns a country
      */
     public Country(){
-            this.id = -1;
+        this.id = -1;
         this.continent = null;
         this.country = null;
     }
