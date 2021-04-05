@@ -16,8 +16,7 @@ public class Country {
      * Returns a country
      */
     public Country(){
-        //Set to -1 to show this question hasn't been "created", semantically speaking
-        this.id = -1;
+            this.id = -1;
         this.continent = null;
         this.country = null;
     }
@@ -41,7 +40,7 @@ public class Country {
 
     /***
      * Method that returns the continent/answer for a question
-     * @return  
+     * @return
       */
     public String getContinent() {
         return continent;
