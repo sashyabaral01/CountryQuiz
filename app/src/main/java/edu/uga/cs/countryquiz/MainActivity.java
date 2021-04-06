@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +15,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Random;
-
-
 /***
  * The main activity is the class that navigates the user to either starting a quiz or viewing past results
  */
@@ -49,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
                Quiz quiz = new Quiz(q1,q2,q3,q4,q5,q6); //storing the quiz
                new RandomQuizStore().execute(quiz); //generating a random quiz
 
-
-
+               Toast.makeText(getApplicationContext(),"Starting quiz",Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(MainActivity.this,Questions.class);
                startActivity(intent);
            }
@@ -59,14 +57,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 quizData.open();
-
                 Intent intent = new Intent(MainActivity.this,ReviewQuizResults.class);
                 new DeleteNullRowsWriterTask().execute(); //deletes unnecessary rows
                 startActivity(intent);
             }
         });
     }
-
     /***
      * Reads from the CSV file
      */
@@ -91,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Data is already filled");
         }
     }
-
-
     /***
      * Private class to write to database
      */
@@ -107,13 +101,9 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute( country );
         }
     }
-
-
     /***
-
      * Deletes an empty row for a partial quiz
      */
-
     private class DeleteNullRowsWriterTask extends AsyncTask<List<Quiz>,Void,Void>{
         @Override
         protected Void doInBackground(List<Quiz>... lists)
@@ -123,12 +113,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     /***
      * Storing random quizzes to display once the quiz is started
      */
-
     private class RandomQuizStore extends AsyncTask<Quiz, Void, Void> {
         // in the onCreateMethod
         @Override
@@ -139,9 +126,6 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-
-
-
     @Override
     public void onResume() {
         // open the database in onResume
